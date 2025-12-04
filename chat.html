@@ -2,11 +2,10 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="styles.css">
 <title>چت با امین</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
 <h2 style="text-align:center; color:white;">چت با امین</h2>
 
 <div id="chat" class="chat-box"></div>
@@ -16,6 +15,31 @@
   <button onclick="sendMsg()">ارسال</button>
 </div>
 
-<script src="client.js"></script>
+<script>
+function add(user, text) {
+  const box = document.getElementById("chat");
+  const div = document.createElement("div");
+  div.className = "bubble";
+  div.innerHTML = `<b>${user}:</b> ${text}`;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+function sendMsg() {
+  const message = document.getElementById("msg").value;
+  if (!message) return;
+  add(localStorage.getItem("username") || "شما", message);
+  document.getElementById("msg").value = "";
+
+  // پاسخ امین (شبیه‌سازی)
+  const reply = "امین: فهمیدم، تو گفتی \"" + message + "\"";
+  setTimeout(() => add("امین", reply), 500);
+}
+
+// اگر کاربر وارد نشده باشد، بازگشت به login
+if (!localStorage.getItem("username")) {
+  window.location.href = "login.html";
+}
+</script>
 </body>
 </html>
