@@ -2,11 +2,10 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="styles.css">
 <title>Amin GPT - ورود</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
 <div class="login-box">
   <h2>ورود به Amin GPT</h2>
   <input id="user" placeholder="نام کاربری">
@@ -16,25 +15,26 @@
 </div>
 
 <script>
-async function login() {
-  const username = user.value;
-  const password = pass.value;
+const USERS = [
+  { username: "ali", password: "1234" },
+  { username: "reza", password: "abcd" },
+  { username: "sara", password: "pass1" }
+];
 
-  const res = await fetch("/login", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ username, password })
-  });
+function login() {
+  const username = document.getElementById("user").value;
+  const password = document.getElementById("pass").value;
 
-  const data = await res.json();
+  const found = USERS.find(u => u.username === username && u.password === password);
 
-  if (data.ok) {
-    window.location.href = "/chat.html";
+  if (found) {
+    // ذخیره نام کاربری در localStorage برای چت
+    localStorage.setItem("username", username);
+    window.location.href = "chat.html";
   } else {
-    msg.innerText = data.msg;
+    document.getElementById("msg").innerText = "نام کاربری یا رمز اشتباه است";
   }
 }
 </script>
-
 </body>
 </html>
