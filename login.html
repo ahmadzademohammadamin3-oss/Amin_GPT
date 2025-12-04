@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="styles.css">
+<title>Amin GPT - ورود</title>
+</head>
+<body>
+
+<div class="login-box">
+  <h2>ورود به Amin GPT</h2>
+  <input id="user" placeholder="نام کاربری">
+  <input id="pass" type="password" placeholder="رمز عبور">
+  <button onclick="login()">ورود</button>
+  <p id="msg"></p>
+</div>
+
+<script>
+async function login() {
+  const username = user.value;
+  const password = pass.value;
+
+  const res = await fetch("/login", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ username, password })
+  });
+
+  const data = await res.json();
+
+  if (data.ok) {
+    window.location.href = "/chat.html";
+  } else {
+    msg.innerText = data.msg;
+  }
+}
+</script>
+
+</body>
+</html>
